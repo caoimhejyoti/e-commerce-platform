@@ -3,19 +3,18 @@ const Product = require('./Product');
 const Category = require('./Category');
 const Tag = require('./Tag');
 const ProductTag = require('./ProductTag');
-const { FOREIGNKEYS } = require('sequelize/types/lib/query-types');
 
 // Products belongsTo Category
 Product.belongsTo(Category,{
   // FIXME: 
   foreignKey: 'category_id',
+  onDelete: 'CASCADE',
 });
 
 // Categories have many Products
 Category.hasMany(Product, {
   // FIXME: CONFIRM DELETE ACTIONS
   foreignKey: 'category_id',
-  onDelete: '',
 });
 
 // Products belongToMany Tags (through ProductTag)
@@ -26,8 +25,9 @@ Product.belongsToMany(Tag, {
   },
 });
 
-// Tags belongToMany Products (through ProductTag)
-Tag.belongsToMany(Products, {
+// FIXME: Triggering error - "product not defined"
+//  Tags belongToMany Products (through ProductTag)
+Tag.belongsToMany(Product, {
   // FIXME: 
   through: {
     model: ProductTag
