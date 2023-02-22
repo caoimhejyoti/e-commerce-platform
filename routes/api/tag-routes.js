@@ -3,7 +3,7 @@ const { Tag, Product, ProductTag } = require('../../models');
 
 // The `/api/tags` endpoint
 
-// WORKING! DESCRIPTION: get all tags
+// DESCRIPTION: get all tags
 router.get('/', async (req, res) => {
   // find all tags
   try{
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
   
 });
 
-// WORKING! DESCRIPTION: get one tag
+// DESCRIPTION: get one tag
 router.get('/:id', async (req, res) => {
   // find a single tag by its `id`
   try{
@@ -39,7 +39,7 @@ router.get('/:id', async (req, res) => {
   
 });
 
-// WORKING! DESCRIPTION: create a new tag
+// DESCRIPTION: create a new tag
 router.post('/', async (req, res) => {
   try {
     const newTag = await Tag.create({
@@ -51,7 +51,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// WORKING! DESCRIPTION: update a tag's name by its `id` value
+// DESCRIPTION: update a tag's name by its `id` value
 router.put('/:id', async (req, res) => {
   try {
     const tagData = await Tag.update(req.body, {
@@ -69,19 +69,24 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// delete on tag by its `id` value
+// DESCRIPTION: delete on tag by its `id` value
 router.delete('/:id', async (req, res) => {
   try {
-    const tagData = await Tag.destroy(req.body, {
+    const chosenId = req.params.id;
+    const deletedTag = await Tag.destroy({
       where: {
-        id: req.params.id,
+        id: chosenId,
       },
     });
-    if (!tagData[0]) {
+
+    if (!deletedTag) {
       res.status(404).json({ message: 'No Tag with this id!' });
       return;
     }
-    res.status(200).json(tagData);
+
+    deletedTag;
+    res.status(200).json({ message: 'Tag successfully deleted.' });
+
   } catch (err) {
     res.status(500).json(err);
   }

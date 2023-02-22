@@ -3,7 +3,7 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 
 // The `/api/products` endpoint
 
-// WORKING! DESCRIPTION: get all products
+// DESCRIPTION: get all products
 router.get('/', async (req, res) => {
   // find all products
   try{
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// WORKING! DESCRIPTION: get one product
+// DESCRIPTION: get one product
 router.get('/:id', async (req, res) => {
   // find a single product by its `id`
   try{
@@ -39,7 +39,7 @@ router.get('/:id', async (req, res) => {
   
 });
 
-// WORKING! DESCRIPTION: create new product
+// DESCRIPTION: create new product
 router.post('/', (req, res) => {
   /* req.body should look like this...
     Product.{
@@ -71,7 +71,7 @@ router.post('/', (req, res) => {
     });
 });
 
-// WORKING! DESCRIPTION: update product
+// DESCRIPTION: update product
 router.put('/:id', (req, res) => {
   // update product data
   Product.update(req.body, {
@@ -113,19 +113,24 @@ router.put('/:id', (req, res) => {
     });
 });
 
-// delete one product by its `id` value
+// DESCRIPTION: delete one product by its `id` value
 router.delete('/:id', async (req, res) => {
   try {
-    const productData = await Product.destroy(req.body, {
+    const chosenId = req.params.id;
+    const deletedProduct = await Product.destroy({
       where: {
-        id: req.params.id,
+        id: chosenId,
       },
     });
-    if (!productData[0]) {
+
+    if (!deletedProduct) {
       res.status(404).json({ message: 'No Product with this id!' });
       return;
     }
-    res.status(200).json(productData);
+
+    deletedProduct;
+    res.status(200).json({ message: 'Product successfully deleted.' });
+
   } catch (err) {
     res.status(500).json(err);
   }
