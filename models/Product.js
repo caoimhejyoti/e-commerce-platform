@@ -21,10 +21,12 @@ Product.init(
       allowNull: false,
     },
     price:{
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10,2),
       allowNull: false,
       // FIXME: add validation - should confirm it is a decimal
-      isDecimal: true
+      validate:{
+        isDecimal: true
+      }
     },
     stock:{
       type: DataTypes.INTEGER,
@@ -32,14 +34,17 @@ Product.init(
       // FIXME: add defalut value - 10
       defaultValue: 10, 
       //FIXME: add validation - should confirm it is a numeric value
-      isNumeric: true
+      validate: {
+        isNumeric: true
+      }
     },
     category_id:{
       type: DataTypes.INTEGER,
       //FIXME: add reference to category model id. 
       references:{ 
         model: Category,
-        key: 'id'
+        key: 'id',
+        unique: false
       }
     }
   },
