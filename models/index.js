@@ -6,7 +6,6 @@ const ProductTag = require('./ProductTag');
 
 // Products belongsTo Category
 Product.belongsTo(Category,{
-  // FIXME: 
   foreignKey: 'category_id',
   onDelete: 'CASCADE',
 });
@@ -19,16 +18,14 @@ Category.hasMany(Product, {
 
 // Products belongToMany Tags (through ProductTag)
 Product.belongsToMany(Tag, {
-  // FIXME: 
   through: {
     model: ProductTag
   },
 });
 
-// FIXME: Triggering error - "product not defined"
+
 //  Tags belongToMany Products (through ProductTag)
 Tag.belongsToMany(Product, {
-  // FIXME: 
   through: {
     model: ProductTag
   },
