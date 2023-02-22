@@ -101,7 +101,7 @@ router.put('/:id', (req, res) => {
         .map(({ id }) => id);
 
       // run both actions
-      return Promise.all([
+      return Promise.all([ 
         ProductTag.destroy({ where: { id: productTagsToRemove } }),
         ProductTag.bulkCreate(newProductTags),
       ]);
@@ -114,6 +114,7 @@ router.put('/:id', (req, res) => {
 });
 
 // DESCRIPTION: delete one product by its `id` value
+// FIXME: delete product tag first, then delete product. 
 router.delete('/:id', async (req, res) => {
   try {
     const chosenId = req.params.id;
