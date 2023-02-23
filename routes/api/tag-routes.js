@@ -70,10 +70,14 @@ router.put('/:id', async (req, res) => {
 });
 
 // DESCRIPTION: delete on tag by its `id` value
-// FIXME: delete product tag first, then delete product. 
 router.delete('/:id', async (req, res) => {
   try {
     const chosenId = req.params.id;
+    const deletedProductTag = await ProductTag.destroy({
+      where: {
+        id: chosenId,
+      },
+    });
     const deletedTag = await Tag.destroy({
       where: {
         id: chosenId,
@@ -85,6 +89,7 @@ router.delete('/:id', async (req, res) => {
       return;
     }
 
+    deletedProductTag;
     deletedTag;
     res.status(200).json({ message: 'Tag successfully deleted.' });
 
