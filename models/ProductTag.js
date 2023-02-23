@@ -4,8 +4,10 @@ const sequelize = require('../config/connection');
 const Product = require('./Product');
 const Tag = require('./Tag');
 
+// DESCRIPTION: Initialize ProductTag model (table) by extending off Sequelize's Model class
 class ProductTag extends Model {}
 
+// DESCRIPTION: set up fields and rules for ProductTag model
 ProductTag.init(
   {
     id:{
@@ -16,7 +18,6 @@ ProductTag.init(
     },
     product_id:{
       type: DataTypes.INTEGER,
-      //FIXME: add reference to product model id. 
       references:{ 
         model: Product,
         key: 'id'
@@ -24,7 +25,6 @@ ProductTag.init(
     },
     tag_id:{
       type: DataTypes.INTEGER,
-      //FIXME: add reference to tag model id.
       references:{ 
         model: Tag,
         key: 'id'
